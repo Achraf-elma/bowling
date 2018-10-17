@@ -15,10 +15,10 @@ case class gameState(score : Int, frames : List[Frame]){
 
       def roll(pinDown : Int) : gameState = {
           var bonus = 0
+        
         if(gameState.strike(this.frames)){
             bonus = pinDown
         }
-        
          copy(score = score + pinDown + bonus)
         
      }
@@ -30,7 +30,7 @@ case class gameState(score : Int, frames : List[Frame]){
        var newGameState =  firstroll
       if(gameState.spare(this.frames)){
             bonus =  roll1;
-      }
+       }
        
        if(roll1 == 10) {
            if(gameState.strikeBonusLeft(this.frames)){
@@ -192,9 +192,14 @@ class BowlingSpec extends FunSpec with Matchers {
         assert(gameAfterStrike.score == 20)
        }
 
-        val gameAfter2Strikes = gameAtInit.frame(10,0).frame(10,0).frame(5,0)
+        val gameAfter2Strikes = gameAtInit.frame(10,0).frame(10,0)
+         it("should be 30 after 2 strikes"){
+        assert(gameAfter2Strikes.score == 30)
+       }
+
+        val gameAfter2Strikes1Hit = gameAtInit.frame(10,0).frame(10,0).frame(5,0)
          it("should be 45 after 2 strikes and one frame of (5,0)"){
-        assert(gameAfter2Strikes.score == 45)
+        assert(gameAfter2Strikes1Hit.score == 45)
        }
 
        val gameWithStrikeNineFrames =  gameAtInit.frame(10,0).frame(10,0).frame(10,0).frame(10,0).frame(10,0).frame(10,0).frame(10,0).frame(10,0).frame(10,0)
