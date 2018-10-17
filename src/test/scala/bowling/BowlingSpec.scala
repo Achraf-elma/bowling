@@ -22,8 +22,13 @@ case class gameState(score : Int, frames : List[Frame]){
          copy(score = score + pinDown + bonus)
         
      }
-
+     def lastframe(roll1 : Int , roll2 : Int, roll3 : Int) : gameState = {
+         var g = frame(roll1, roll2)
+         var g2 = g.frame(roll3, 0)
+         g2
+     }
      def frame(roll1 : Int, roll2 : Int) : gameState = {
+         
          var bonus = 0;
         
        val firstroll = roll(roll1)
@@ -205,6 +210,11 @@ class BowlingSpec extends FunSpec with Matchers {
        val gameWithStrikeNineFrames =  gameAtInit.frame(10,0).frame(10,0).frame(10,0).frame(10,0).frame(10,0).frame(10,0).frame(10,0).frame(10,0).frame(10,0)
          it("should be 240 after the nineth frame of strike"){
         assert(gameWithStrikeNineFrames.score == 240)
+         }
+
+         val gameWithStrike10Frames =  gameAtInit.frame(10,0).frame(10,0).frame(10,0).frame(10,0).frame(10,0).frame(10,0).frame(10,0).frame(10,0).frame(10,0).lastframe(10,10,10)
+         it("should be 300 after the ten frame of strike"){
+        assert(gameWithStrike10Frames.score == 300)
          }
      }     
       /** it("should be 0 when all roll into gutter"){
