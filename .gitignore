@@ -1,0 +1,14 @@
+/project/target/
+/project/project/
+/project/boot/
+/project/plugins/project
+/target
+.idea/
+
+*.iml
+*.project*
+*.settings*
+*.classpath*
+version.properties
+
+.DS_Store
