@@ -31,11 +31,10 @@ case class gameState(score : Int, frames : List[Frame]){
       if(gameState.spare(this.frames)){
             bonus =  roll1;
        }
-       
+       if(gameState.strikeBonusLeft(this.frames)){
+                bonus = roll1
+        }
        if(roll1 == 10) {
-           if(gameState.strikeBonusLeft(this.frames)){
-                bonus = roll2
-            }
             newGameState = firstroll.copy(score = firstroll.score + bonus, frames = Frame(10, 0) :: firstroll.frames)
        } else {
            val secondroll = firstroll.roll(roll2)
@@ -202,9 +201,10 @@ class BowlingSpec extends FunSpec with Matchers {
         assert(gameAfter2Strikes1Hit.score == 45)
        }
 
+
        val gameWithStrikeNineFrames =  gameAtInit.frame(10,0).frame(10,0).frame(10,0).frame(10,0).frame(10,0).frame(10,0).frame(10,0).frame(10,0).frame(10,0)
-         it("should be 270 after the nineth frame of strike"){
-        assert(gameWithStrikeNineFrames.score == 270)
+         it("should be 240 after the nineth frame of strike"){
+        assert(gameWithStrikeNineFrames.score == 240)
          }
      }     
       /** it("should be 0 when all roll into gutter"){
